@@ -1,7 +1,6 @@
 import os
 import sys
 
-
 import glob
 from PIL import Image
 import numpy as np
@@ -9,13 +8,17 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import cv2 as cv
 
+'''
+This implemetation is from 'CS20: Tensorflow for Deep Learning Research' at Stanford
+Few lines has been edited to use in GLCIC
+'''
+
 IMAGE_SIZE = 128
 
 def _int64_feature(value):
   return tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
 
 def _bytes_feature(value):
-  # return tf.train.Feature(bytes_list=tf.train.BytesList(value=[tf.compat.as_bytes(value)]))
   return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
 
 
@@ -35,25 +38,19 @@ def get_image_binary(filename):
     image = np.asarray(image, np.uint8)
     shape = np.array(image.shape, np.int32)
     print(shape)
-    return shape.tobytes(), image.tostring()#image.tobytes() # convert image to raw data bytes in the array.
+    return shape.tobytes(), image.tostring() #image.tobytes() # convert image to raw data bytes in the array.
 
 
 def write_to_tfrecord(writer, shape, binary_image, tfrecord_file):
     """ This example is to write a sample to TFRecord file. If you want to write
     more samples, just use a loop.
     """
-    # writer = tf.python_io.TFRecordWriter(tfrecord_file)
-    # write label, shape, and image content to the TFRecord file
     example = tf.train.Example(features=tf.train.Features(feature={
                 'shape': _bytes_feature(shape),
                 'image': _bytes_feature(binary_image)
                 }))
     writer.write(example.SerializeToString())
-    # writer.close()
 
-# def write_tfrecord(label, image_file, tfrecord_file):
-#     shape, binary_image = get_image_binary(image_file)
-#     write_to_tfrecord(label, shape, binary_image, tfrecord_file)
 
 def write_tfrecord(writer, image_file, tfrecord_file):
     shape, binary_image = get_image_binary(image_file)
@@ -113,16 +110,6 @@ def read_vis_tfrecord(reader, tfrecord_file):
 
 def read_tfrecord(reader, tfrecord_file):
     image, shape = read_from_tfrecord(reader, [tfrecord_file])
-
-    # with tf.Session() as sess:
-    #     coord = tf.train.Coordinator()
-    #     threads = tf.train.start_queue_runners(coord=coord)
-    #     image, shape = sess.run([image, shape])
-    #     coord.request_stop()
-    #     coord.join(threads)
-    # print(shape)
-    # plt.imshow(image)
-    # plt.show()
     return image, shape
 
 def main():
@@ -164,8 +151,5 @@ def main():
 
     # print('shape:{}:'.format(shape))
 
-
-# def __init__():
-#     print('init')
 if __name__ == '__main__':
     main()
