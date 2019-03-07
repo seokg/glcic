@@ -15,38 +15,6 @@ with TensorFlow.
 
 # Results
 
-![](results/001.jpg)
-
-![](results/002.jpg)
-
-![](results/003.jpg)
-
-![](results/004.jpg)
-
-![](results/005.jpg)
-
-![](results/006.jpg)
-
-![](results/007.jpg)
-
-![](results/008.jpg)
-
-![](results/009.jpg)
-
-![](results/010.jpg)
-
-![](results/011.jpg)
-
-![](results/012.jpg)
-
-![](results/013.jpg)
-
-![](results/014.jpg)
-
-![](results/015.jpg)
-
-![](results/016.jpg)
-
 
 
 # Usage
@@ -78,23 +46,7 @@ https://drive.google.com/open?id=1jvP2czv_gX8Q1l0tUPNWLV8HLacK6n_Q)
 
 # Approach
 
-This implementation uses 128x128 images as training data unlike paper.
-So the both discriminators have 1 conv layer fewer;
-that is, the local and global discriminator have 4 and 5 conv layers, respectively.
-
-I trained the GLCIC model using 5,434 face images collected from the Internet.
-The paper says the training should be split into three phases, but I skipped the second step.
-The completion network is trained with the MSE loss for 100 interatinos;
-then both the completion network and discriminator are trained to reach the total of 400 iterations.
-The entire training procedure takes roughly 16 hours on a single machine equipped with a GTX 1070.
-
-
 # Future Work
-
-![](results/marginal.jpg)
-
-The result is not good when marginal area is missing.
-
 
 # License
 
